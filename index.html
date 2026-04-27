@@ -2821,7 +2821,7 @@ function submitEmailAndDownload(){
   document.getElementById('emailGate').style.display='none';
 
   // Send email + protocol to Google Sheets (fire-and-forget)
-  if(WELME_SHEET_URL {
+  if(WELME_SHEET_URL) {
     try{
       fetch(WELME_SHEET_URL,{
         method:'POST',

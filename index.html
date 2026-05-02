@@ -2823,6 +2823,17 @@ function closeEmailGate(){
 var WELME_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxPBvnPylbFWc4StA5PkMAxskagtgZzTljWV72qNMvGAkAWcM6kriRkiUxmzKWAOJXW/exec';
 // ────────────────────────────────────────────────────────────────────────────
 
+function getUserId() {
+  let userId = localStorage.getItem("welme_user_id");
+
+  if (!userId) {
+    userId = "user_" + Date.now() + "_" + Math.random().toString(36).substring(2);
+    localStorage.setItem("welme_user_id", userId);
+  }
+
+  return userId;
+}
+
 function submitEmailAndDownload(){
   var emailInput=document.getElementById('emailInput');
   var email=emailInput.value.trim();
@@ -2834,20 +2845,20 @@ function submitEmailAndDownload(){
   document.getElementById('emailGate').style.display='none';
 
   // Send email + protocol to Google Sheets (fire-and-forget)
-  if(WELME_SHEET_URL) {
-    try{
-      fetch(WELME_SHEET_URL,{
-        method:'POST',
-        mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          email:email,
-          protocol:window._welmeProto||'',
-          ts:new Date().toISOString()
-        })
-      });
-    }catch(e){}
-  }
+if (WELME_SHEET_URL) {
+  try {
+    fetch(WELME_SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_id: getUserId(),
+        email: email,
+        protocol: window._welmeProtocol || ''
+      })
+    });
+  } catch (e) {}
+}
 
   window.print();
 }

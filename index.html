@@ -1716,6 +1716,8 @@ function buildProfile(){
   var age=parseInt((ageAns+'').split('–')[0].split('-')[0])||25;
   var ageGrp=age<35?'young':age<55?'mature':'senior';
   var sex=QS[1].opts[ans[1]]||'Female';
+  window._welmeAge = age;
+  window._welmeGender = sex;
   var hRaw=parseFloat(ans[2])||0;
   var wRaw=parseFloat(ans[3])||0;
   var h,w,bmi,heightDisplay,weightDisplay;
